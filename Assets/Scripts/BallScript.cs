@@ -8,6 +8,7 @@ public class BallScript : MonoBehaviour
     public bool inPlay;
     public Transform player;
     public float speed;
+    public Transform explosion;
 
     void Start()
     {
@@ -38,8 +39,11 @@ public class BallScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Brick"))
+        if (collision.transform.CompareTag("Brick")) {
+            Transform newexp = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
+            Destroy(newexp.gameObject, 1f);
             Destroy(collision.gameObject);
+        }
     }
 
 }
