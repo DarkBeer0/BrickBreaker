@@ -9,6 +9,7 @@ public class BallScript : MonoBehaviour
     public Transform player;
     public float speed;
     public Transform explosion;
+    public GameManager gm;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class BallScript : MonoBehaviour
             Debug.Log("Ball hit the bottom of the screen");
             rb.velocity = Vector2.zero;
             inPlay = false;
+            gm.UpdateLives(-1);
         }
     }
 
@@ -42,6 +44,7 @@ public class BallScript : MonoBehaviour
         if (collision.transform.CompareTag("Brick")) {
             Transform newexp = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
             Destroy(newexp.gameObject, 1f);
+            gm.UpdateScore(collision.gameObject.GetComponent<Brick>().points);
             Destroy(collision.gameObject);
         }
     }
