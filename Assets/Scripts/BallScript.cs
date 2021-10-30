@@ -48,6 +48,7 @@ public class BallScript : MonoBehaviour
             Transform newexp = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
             Destroy(newexp.gameObject, 1f);
             gm.UpdateScore(collision.gameObject.GetComponent<Brick>().points);
+            gm.UpdateNumberOfBricks();
             Destroy(collision.gameObject);
         }
     }

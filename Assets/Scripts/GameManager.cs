@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
     public int lives;
     private int score;
     public Text livestext;
     public Text scoretext;
+
+    [HideInInspector]
+    public int numberOfBricks;
 
     [HideInInspector]
     public bool gameOver;
@@ -20,6 +25,7 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         livestext.text = "Lives: " + lives;
         scoretext.text = "Score: " + score;
+        numberOfBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
     }
 
     // Update is called once per frame
@@ -51,5 +57,23 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         gameOverPanel.SetActive(true);
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+        Debug.Log("Quit");
+    }
+
+    public void UpdateNumberOfBricks()
+    {
+        numberOfBricks--;
+        if (numberOfBricks <= 0)
+            GameOver();
     }
 }
