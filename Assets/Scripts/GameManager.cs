@@ -9,9 +9,15 @@ public class GameManager : MonoBehaviour
     public Text livestext;
     public Text scoretext;
 
+    [HideInInspector]
+    public bool gameOver;
+
+    public GameObject gameOverPanel;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameOver = false;
         livestext.text = "Lives: " + lives;
         scoretext.text = "Score: " + score;
     }
@@ -26,7 +32,11 @@ public class GameManager : MonoBehaviour
     {
         lives += changeInLives;
 
-
+        if(lives <= 0)
+        {
+            lives = 0;
+            GameOver();
+        }
 
         livestext.text = "Lives: " + lives;
     }
@@ -35,5 +45,11 @@ public class GameManager : MonoBehaviour
     {
         score += points;
         scoretext.text = "Score: " + score;
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+        gameOverPanel.SetActive(true);
     }
 }

@@ -19,6 +19,9 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gm.gameOver)
+            return;
+
         if (!inPlay)
             transform.position = player.position;
 
