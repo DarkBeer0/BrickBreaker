@@ -28,4 +28,13 @@ public class CharecterMovement : MonoBehaviour
         if (transform.position.x > rightScreenEdge)
             transform.position = new Vector2(rightScreenEdge, transform.position.y);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("ExtraLive")) { 
+            gm.UpdateLives(1);
+            Destroy(collision.gameObject);
+        }
+        Debug.Log("Hit " + collision.name);
+    }
 }

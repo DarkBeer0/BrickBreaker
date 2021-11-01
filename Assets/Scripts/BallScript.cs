@@ -7,8 +7,9 @@ public class BallScript : MonoBehaviour
     public Rigidbody2D rb;
     public bool inPlay;
     public Transform player;
-    public float speed;
     public Transform explosion;
+    public Transform powerUp;
+    public float speed;
     public GameManager gm;
 
     void Start()
@@ -45,6 +46,12 @@ public class BallScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Brick")) {
+
+            int randomChance = Random.Range(0, 100);
+            if (randomChance < 50) 
+                Instantiate(powerUp, collision.transform.position, collision.transform.rotation);
+
+
             Transform newexp = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
             Destroy(newexp.gameObject, 1f);
             gm.UpdateScore(collision.gameObject.GetComponent<Brick>().points);
