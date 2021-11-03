@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool gameOver;
     public GameObject gameOverPanel;
+    public GameObject loadLevelPanel;
     public Transform[] levels;
     public int currentLevelIndex = 0;
 
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
                 GameOver();
             }
             else {
+                loadLevelPanel.SetActive(true);
+                loadLevelPanel.GetComponentInChildren<Text>().text = "Level " + (currentLevelIndex + 2);
                 gameOver = true;
                 Invoke("LoadLevel", 3f);
             }
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
         Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
         numberOfBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
         gameOver = false;
+        loadLevelPanel.SetActive(false);
     }
 
 }
