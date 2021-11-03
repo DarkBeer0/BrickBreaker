@@ -11,13 +11,14 @@ public class GameManager : MonoBehaviour
     public Text livestext;
     public Text scoretext;
 
-    [HideInInspector]
+    
     public int numberOfBricks;
 
     [HideInInspector]
     public bool gameOver;
-
     public GameObject gameOverPanel;
+    public Transform[] levels;
+    public int currentLevelIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +74,23 @@ public class GameManager : MonoBehaviour
     public void UpdateNumberOfBricks()
     {
         numberOfBricks--;
-        if (numberOfBricks <= 0)
-            GameOver();
+        if (numberOfBricks <= 0) {
+            if (currentLevelIndex >= levels.Length - 1) { 
+                GameOver();
+            }
+            else {
+                gameOver = true;
+                Invoke("LoadLevel", 3f);
+            }
+        }
     }
+
+    void LoadLevel()
+    {
+        currentLevelIndex++;
+        Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
+        numberOfBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
+        gameOver = false;
+    }
+
 }
